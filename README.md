@@ -1,1 +1,2 @@
 # AirBnB_clone_v2
+The initial phase of the AirBnB project encompasses the development of the console, an essential component in our journey towards deploying a functional server that mirrors the fundamental features of the AirBnB website, hereafter referred to as HBnB. Within this pivotal segment, we have engineered a command interpreter, specifically designed to administer and manipulate objects integral to the operation of the HBnB website. This command interpreter serves as the linchpin in our quest to replicate the robust functionality of the HBnB platform.
