@@ -10,21 +10,24 @@ from os import getenv
 import pycodestyle
 import inspect
 import unittest
+
 storage_t = getenv("HBNB_TYPE_STORAGE")
 
+
 class test_Amenity(test_basemodel):
-    """ """
+    """ amenity test class """
 
     def __init__(self, *args, **kwargs):
-        """ """
+        """ inti the test class """
         super().__init__(*args, **kwargs)
         self.name = "Amenity"
         self.value = Amenity
 
     def test_name2(self):
-        """ """
+        """ testing name type """
         new = self.value()
         self.assertEqual(type(new.name), str)
+
 
 class Test_PEP8(unittest.TestCase):
     """ test User """
@@ -133,7 +136,9 @@ class TestAmenity(unittest.TestCase):
         self.assertTrue(hasattr(amenity, "updated_at"))
 
     def test_name_attr(self):
-        """ test that Amenity has attribute name, and it's as an empty string """
+        """ test that Amenity has attribute name,
+            and it's as an empty string
+        """
         amenity = Amenity()
         self.assertTrue(hasattr(amenity, "name"))
         if storage_t == 'db':
