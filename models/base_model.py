@@ -4,7 +4,8 @@ from sqlalchemy.ext.declarative import declarative_base
 import uuid
 from datetime import datetime
 import models
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, String, DateTime
+import os
 
 Base = declarative_base()
 
@@ -12,6 +13,11 @@ Base = declarative_base()
 class BaseModel:
     """This class will defines all common attributes/methods
     for other classes
+
+    Attributes:
+        id(str): A unique string, can't be null primary key
+        created_at(datetime): Current datetime
+        updated_at(datetime): The date the object was updated
     """
     id = Column(String(60), unique=True, nullable=False, primary_key=True)
     created_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
@@ -48,8 +54,8 @@ class BaseModel:
         Return:
             returns a string of class name, id, and dictionary
         """
-        return "[{}] ({}) {}".format(
-            type(self).__name__, self.id, self.__dict__)
+        cls = (str(type(self)).split('.')[-1]).split('\'')[0]
+        return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
 
     def __repr__(self):
         """return a string representaion
@@ -59,6 +65,7 @@ class BaseModel:
     def save(self):
         """updates the public instance attribute updated_at to current
         """
+        from models import storage
         self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()

@@ -12,6 +12,9 @@ from models.place import Place
 from models.review import Review
 from models.amenity import Amenity
 
+classes = {"City": City, "State": State, "User": User, "Place": Place,
+           "Review": Review, "Amenity": Amenity}
+
 
 class DBStorage:
     """ create tables in environmental"""
@@ -19,17 +22,21 @@ class DBStorage:
     __session = None
 
     def __init__(self):
+        dialect = "mysql"
+        driver = "mysqldb"
+        port = 3306
         user = getenv("HBNB_MYSQL_USER")
         passwd = getenv("HBNB_MYSQL_PWD")
         db = getenv("HBNB_MYSQL_DB")
         host = getenv("HBNB_MYSQL_HOST")
         env = getenv("HBNB_ENV")
 
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(user, passwd, host, db),
-                                      pool_pre_ping=True)
+        db_engine = "{}+{}://{}:{}@{}:{}/{}".format(
+            dialect, driver, user, passwd, host, port, db)
 
-        if env == "test":
+        self.__engine = create_engine(db_engine, pool_pre_ping=True)
+
+        if os.getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
@@ -41,6 +48,7 @@ class DBStorage:
         if cls:
             if type(cls) is str:
                 cls = eval(cls)
+
             query = self.__session.query(cls)
             for elem in query:
                 key = "{}.{}".format(type(elem).__name__, elem.id)
@@ -50,7 +58,7 @@ class DBStorage:
             for clase in lista:
                 query = self.__session.query(clase)
                 for elem in query:
-                    key = "{}.{}".format(type(elem).__name__, elem.id)
+                    key = elem.__class__.__name__ + "." + elem.id
                     dic[key] = elem
         return (dic)
 
