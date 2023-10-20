@@ -60,7 +60,7 @@ def number_template(n):
     display a HTML page only if n is an integer
     H1 tag: “Number: n” inside the tag BODY
     """
-    return render_template("5-number.html", num = n)
+    return render_template("5-number.html", num=n)
 
 
 if __name__ == '__main__':
