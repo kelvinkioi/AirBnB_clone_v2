@@ -9,7 +9,7 @@ from os import getenv
 import shlex
 
 if models.store == 'db':
-    metadata = Base.metadate
+    metadata = Base.metadata
     place_amenity = Table("place_amenity", Base.metadata,
                       Column("place_id", String(60),
                              ForeignKey("places.id"),
@@ -23,7 +23,7 @@ if models.store == 'db':
 
 class Place(BaseModel):
     """ A place to stay """
-    if models.storage_t == 'db':
+    if models.store == 'db':
         __tablename__ = 'places'
 
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
