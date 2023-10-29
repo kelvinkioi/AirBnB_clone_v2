@@ -9,12 +9,13 @@ from models.place import place_amenity
 
 
 class Amenity(BaseModel, Base):
-   if models.store == 'db':
-    __tablename__ = "amenities"
-    name = Column(String(128), nullable=False)
-    place_amenities = relationship("Place", secondary=place_amenity)
-   else:
-     name = ""
-   def __init__(self, *args, **kwargs):
-        """initialing Amenity"""
-        super().__init__(*args, **kwargs) 
+    """representation of class amenity"""
+    if models.store == 'db':
+        __tablename__ = 'amenities'
+        name = Column(String(128), nullable=False)
+    else:
+        name = ""
+
+    def __init__(self, *args, **kwargs):
+        """initializing Amenity"""
+        super().__init__(*args, **kwargs)
